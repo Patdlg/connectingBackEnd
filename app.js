@@ -12,7 +12,7 @@ const path         = require('path');
 
 mongoose.Promise = Promise;
 mongoose
-  .connect('mongodb://localhost/connectingbackend', {useMongoClient: true})
+  .connect('mongodb://rodrigortizg:gq9154wd@ds233531.mlab.com:33531/ironhacking', {useMongoClient: true})
   .then(() => {
     console.log('Connected to Mongo!')
   }).catch(err => {
@@ -23,6 +23,7 @@ const app_name = require('./package.json').name;
 const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.')[0]}`);
 
 const app = express();
+app.use(require('cors')())
 
 // Middleware Setup
 app.use(logger('dev'));
@@ -52,7 +53,10 @@ app.locals.title = 'Express - Generated with IronGenerator';
 
 
 const index = require('./routes/index');
+const phones = require('./routes/phones')
+app.use('/phones', phones)
 app.use('/', index);
+
 
 
 module.exports = app;
